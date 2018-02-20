@@ -1,12 +1,14 @@
 # DaemonBuilder
 
+Experimental project to run a daemon that might also be used as a CLI.
+
 ## Scope
 
-The DaemonBuilder helps with
+The DaemonBuilder helps
 
 * running a daemon
-* adding a CLI to execute instead if args are present
-* providing dependency injection in both from the start (Constructor)
+* adding a CLI to execute instead (if args are present)
+* providing dependency injection in both from the start (constructor)
 
 ## Usage
 
@@ -27,7 +29,7 @@ static class Program
 
     private static IServiceCollection ConfigureServices()
     {
-        // Microsoft.Extensions.DependencyInjectioni
+        // Microsoft.Extensions.DependencyInjection
     }
 }
 ```
