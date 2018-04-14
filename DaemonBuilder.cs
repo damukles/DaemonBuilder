@@ -44,17 +44,15 @@ namespace DaemonBuilder
             var provider = _configureServicesAction()
                 .BuildServiceProvider();
 
-            Func<IServiceProvider, ICommandLineInterface> cliFactory = (IServiceProvider serviceProvider) =>
-                 _cliType != null
-                     ? (ICommandLineInterface)ActivatorUtilities.CreateInstance(serviceProvider, _cliType)
-                     : null;
+            Func<ICommandLineInterface> cliFactory = _cliType != null
+                ? () => (ICommandLineInterface)ActivatorUtilities.CreateInstance(provider, _cliType)
+                : (Func<ICommandLineInterface>)null;
 
-            Func<IServiceProvider, IDaemon> daemonFactory = (IServiceProvider serviceProvider) =>
-                 _daemonType != null
-                     ? (IDaemon)ActivatorUtilities.CreateInstance(serviceProvider, _daemonType)
-                     : null;
+            Func<IDaemon> daemonFactory = _daemonType != null
+                ? () => (IDaemon)ActivatorUtilities.CreateInstance(provider, _daemonType)
+                : (Func<IDaemon>)null;
 
-            return new DaemonExecutor(provider, cliFactory, daemonFactory);
+            return new DaemonExecutor(cliFactory, daemonFactory);
         }
     }
 }

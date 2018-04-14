@@ -6,15 +6,12 @@ namespace DaemonBuilder
 {
     public class DaemonExecutor
     {
-        public readonly IServiceProvider ServiceProvider;
-        private readonly Func<IServiceProvider, ICommandLineInterface> _cliFactory;
-        private readonly Func<IServiceProvider, IDaemon> _daemonFactory;
+        private readonly Func<ICommandLineInterface> _cliFactory;
+        private readonly Func<IDaemon> _daemonFactory;
 
-        public DaemonExecutor(IServiceProvider serviceProvider,
-                              Func<IServiceProvider, ICommandLineInterface> cliFactory,
-                              Func<IServiceProvider, IDaemon> daemonFactory)
+        public DaemonExecutor(Func<ICommandLineInterface> cliFactory,
+                              Func<IDaemon> daemonFactory)
         {
-            ServiceProvider = serviceProvider;
             _cliFactory = cliFactory;
             _daemonFactory = daemonFactory;
         }
@@ -39,9 +36,9 @@ namespace DaemonBuilder
 
         private void RunCmdLineApp(string[] args)
         {
-            var exitCode = _cliFactory(ServiceProvider).Execute(args);
+            var exitCode = _cliFactory()?.Execute(args);
 
-            Environment.Exit(exitCode);
+            Environment.Exit(exitCode ?? 0);
         }
 
         private void RunDaemon()
@@ -61,13 +58,16 @@ namespace DaemonBuilder
                 exitEvent.Set();
             };
 
-            var daemon = _daemonFactory(ServiceProvider);
-            daemon.Start();
+            if (_daemonFactory != null)
+            {
+                var daemon = _daemonFactory();
+                daemon.Start();
 
-            // Block Thread until a exit signal is caught
-            exitEvent.WaitOne();
+                // Block Thread until a exit signal is caught
+                exitEvent.WaitOne();
 
-            daemon.Stop();
+                daemon.Stop();
+            }
         }
     }
 }
