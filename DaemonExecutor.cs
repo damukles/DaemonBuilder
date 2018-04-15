@@ -10,10 +10,11 @@ namespace DaemonBuilder
         private readonly Func<IServiceProvider, ICommandLineInterface> _cliFactory;
         private readonly Func<IServiceProvider, IDaemon> _daemonFactory;
 
-        public DaemonExecutor(IServiceProvider _serviceProvider,
+        public DaemonExecutor(IServiceProvider serviceProvider,
                               Func<IServiceProvider, ICommandLineInterface> cliFactory,
                               Func<IServiceProvider, IDaemon> daemonFactory)
         {
+            ServiceProvider = serviceProvider;
             _cliFactory = cliFactory;
             _daemonFactory = daemonFactory;
         }
