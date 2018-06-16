@@ -2,7 +2,7 @@ using System;
 using System.Runtime.Loader;
 using System.Threading;
 
-namespace DaemonBuilder
+namespace Hosting
 {
     public class DaemonExecutor
     {

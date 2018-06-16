@@ -1,4 +1,4 @@
-namespace DaemonBuilder
+namespace Hosting
 {
     ///<summary>
     ///A command line interface, that will run instead of the daemon if args are present.

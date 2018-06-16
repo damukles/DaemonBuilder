@@ -1,4 +1,4 @@
-﻿namespace DaemonBuilder
+﻿namespace Hosting
 {
     ///<summary>
     ///A daemon style application that will run until stopped

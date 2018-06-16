@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 
-namespace DaemonBuilder
+namespace Hosting
 {
     ///<summary>
     ///A builder, that helps you run a daemon application.
